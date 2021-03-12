@@ -5,5 +5,5 @@ package doemu.buildingweb.repository;
 import doemu.buildingweb.Composition;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ClientRepository extends JpaRepository <Composition, String>{
+public interface CompositionRepository extends JpaRepository <Composition, String>{
 }
