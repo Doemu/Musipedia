@@ -1,4 +1,4 @@
-package doemu.buildingweb;
+package doemu.buildingweb.entities;
 
 import org.springframework.context.annotation.Primary;
 
