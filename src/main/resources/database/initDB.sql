@@ -1,16 +1,16 @@
-CREATE TABLE IF NOT EXISTS Performer
+CREATE TABLE IF NOT EXISTS performer
 (
-      performerName varchar(40) PRIMARY KEY
+      performer_name varchar(40) PRIMARY KEY
 );
 
-CREATE TABLE IF NOT EXISTS Composition
+CREATE TABLE IF NOT EXISTS composition
 (
-    compositionName varchar(40) PRIMARY KEY
+    composition_name varchar(40) PRIMARY KEY
     );
 
-CREATE TABLE IF NOT EXISTS PerformedComposition
+CREATE TABLE IF NOT EXISTS performedcomposition
 (
-    performerName varchar(40),
-    compositionName varchar (40),
-    PRIMARY KEY (performerName, compositionName)
+    performer_name varchar(40),
+    composition_name varchar (40),
+    PRIMARY KEY (performer_name, composition_name)
     );

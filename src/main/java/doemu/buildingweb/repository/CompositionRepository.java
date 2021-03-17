@@ -5,5 +5,8 @@ package doemu.buildingweb.repository;
 import doemu.buildingweb.entities.Composition;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import javax.transaction.Transactional;
+import java.util.List;
+
 public interface CompositionRepository extends JpaRepository <Composition, String>{
 }

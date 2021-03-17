@@ -8,9 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Composition")
+@Table(name = "composition", schema = "public")
 public class Composition {
-    @Column(name = "compositionName")
+    @Column(name = "composition_name")
     @Id
     private String compositionName;
 
