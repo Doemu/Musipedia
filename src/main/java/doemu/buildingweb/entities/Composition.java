@@ -2,17 +2,18 @@ package doemu.buildingweb.entities;
 
 import org.springframework.context.annotation.Primary;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "composition", schema = "public")
 public class Composition {
+
     @Column(name = "composition_name")
     @Id
     private String compositionName;
+    @OneToMany(mappedBy = "composition", cascade = CascadeType.ALL, orphanRemoval = true)
+    Set<PerformedComposition> performedCompositions;
 
     public Composition(String compositionName) {
         this.compositionName = compositionName;

@@ -9,7 +9,7 @@ INSERT INTO composition VALUES
 ('Riot');
 
 INSERT INTO performedcomposition VALUES
-('Nickelback', 'If today was your last day'),
-('Nickelback', 'We Will Rock you'),
-('Queen', 'We Will Rock you'),
-('Three Days Grace', 'Riot');
+(2, 'Nickelback', 'If today was your last day'),
+(3, 'Nickelback', 'We Will Rock you'),
+(4, 'Queen', 'We Will Rock you'),
+(5, 'Three Days Grace', 'Riot');

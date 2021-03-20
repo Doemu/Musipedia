@@ -11,14 +11,15 @@ import doemu.buildingweb.repository.CompositionRepository;
 import doemu.buildingweb.repository.PerformedCompositionRepository;
 import doemu.buildingweb.repository.PerformerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
+import javax.xml.bind.ValidationException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@CrossOrigin
 public class MusipediaController {
 
     @Autowired
@@ -36,6 +37,7 @@ public class MusipediaController {
         this.performerRepository = performerRepository;
         this.mapper = mapper;
     }
+
 
     public MusipediaController() {
     }
@@ -61,4 +63,55 @@ public class MusipediaController {
         var list = performerRepository.findAll();
         return list.stream().map(obj -> this.mapper.convertPerformerToView(obj)).collect(Collectors.toList());
     }
+
+    @PostMapping
+    @RequestMapping("/addComposition")
+    public void addComposition(@RequestBody CompositionViewModel compositionViewModel, BindingResult bindingResult) throws ValidationException {
+        if(bindingResult.hasErrors()){
+            throw new ValidationException("Adding error");
+        }
+
+        var entity = mapper.convertViewToComposition(compositionViewModel);//new Composition(compositionViewModel.getName());
+        compositionRepository.save(entity);
+    }
+
+    @PostMapping
+    @RequestMapping("/addPerformer")
+    public void addPerformer(@RequestBody PerformerViewModel performerViewModel, BindingResult bindingResult) throws ValidationException {
+        if(bindingResult.hasErrors()){
+            throw new ValidationException("Adding error");
+        }
+
+        var entity = new Performer(performerViewModel.getName());
+        performerRepository.save(entity);
+    }
+
+    @GetMapping("/test/{name}")
+    public List<PerformedCompositionsViewModel> test(@PathVariable String name){
+        performerRepository.deleteById(name);
+        var list = performedCompositionRepository.findAll();
+        return list.stream().map(obj -> this.mapper.convertPcToView(obj)).collect(Collectors.toList());
+    }
+
+    @GetMapping("/test2")
+    public List<PerformedComposition> test2(){
+        return performedCompositionRepository.findAll();
+    }
+
+    @GetMapping("/add")
+    public void add(){
+        var comp = compositionRepository.findById("We Will Rock you").orElse(null);
+        var per = performerRepository.findById("Queen").orElse(null);
+        var ent = new PerformedComposition(comp,per);
+        //compositionRepository.save(comp);
+        //performerRepository.save(per);
+        performedCompositionRepository.save(ent);
+    }
+
+    /*@PostMapping
+    public void addComposition(@RequestBody CompositionViewModel compositionViewModel, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            throw new
+        }
+    }*/
 }

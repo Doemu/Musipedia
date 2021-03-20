@@ -1,5 +1,6 @@
 CREATE TABLE IF NOT EXISTS performer
 (
+
       performer_name varchar(40) PRIMARY KEY
 );
 
@@ -10,7 +11,7 @@ CREATE TABLE IF NOT EXISTS composition
 
 CREATE TABLE IF NOT EXISTS performedcomposition
 (
-    performer_name varchar(40),
-    composition_name varchar (40),
-    PRIMARY KEY (performer_name, composition_name)
+    pc_id BIGSERIAL PRIMARY KEY,
+    performer_name varchar(40) REFERENCES performer(performer_name),
+    composition_name varchar (40) REFERENCES composition(composition_name)
     );

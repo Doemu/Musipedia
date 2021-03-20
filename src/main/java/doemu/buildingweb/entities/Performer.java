@@ -1,9 +1,7 @@
 package doemu.buildingweb.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "performer", schema = "public")
@@ -11,6 +9,8 @@ public class Performer {
     @Column(name = "performer_name")
     @Id
     private String performerName;
+    @OneToMany(mappedBy = "performer", cascade = CascadeType.ALL, orphanRemoval = true)
+    Set<PerformedComposition> performedCompositions;
 
     public Performer(String performerName) {
         this.performerName = performerName;

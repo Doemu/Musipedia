@@ -44,13 +44,13 @@ public class Mapper {
     }
 
     public PerformedComposition convertViewToPc(PerformedCompositionsViewModel view){
-        return new PerformedComposition(view.getCompositionName(), view.getPerformerName());
+        return new PerformedComposition(view.getId(),new Composition(view.getCompositionName()), new Performer(view.getPerformerName()));
     }
 
     public PerformedCompositionsViewModel convertPcToView(PerformedComposition pc){
         var view = new PerformedCompositionsViewModel();
-        view.setPerformerName(pc.getPerformerName());
-        view.setCompositionName(pc.getCompositionName());
+        view.setPerformerName(pc.getPerformer().getPerformerName());
+        view.setCompositionName(pc.getComposition().getCompositionName());
         return view;
     }
 }
