@@ -8,5 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import javax.transaction.Transactional;
 import java.util.List;
 
-public interface CompositionRepository extends JpaRepository <Composition, String>{
+public interface CompositionRepository extends JpaRepository <Composition, Long>{
+    @Transactional
+    public Composition findCompositionByCompositionName(String name);
 }

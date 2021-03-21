@@ -1,15 +1,15 @@
 INSERT INTO performer VALUES
-('Nickelback'),
-('Queen'),
-('Three Days Grace');
+(1, 'Nickelback'),
+(2, 'Queen'),
+(3, 'Three Days Grace');
 
 INSERT INTO composition VALUES
-('If today was your last day'),
-('We Will Rock you'),
-('Riot');
+(1, 'If today was your last day'),
+(2, 'We Will Rock you'),
+(3, 'Riot');
 
 INSERT INTO performedcomposition VALUES
-(2, 'Nickelback', 'If today was your last day'),
-(3, 'Nickelback', 'We Will Rock you'),
-(4, 'Queen', 'We Will Rock you'),
-(5, 'Three Days Grace', 'Riot');
+(1, 1, 1),
+(2, 1, 2),
+(3, 2, 2),
+(4, 3, 3);

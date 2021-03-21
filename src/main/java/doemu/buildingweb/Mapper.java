@@ -23,32 +23,38 @@ public class Mapper {
         this.performedCompositionRepository = performedCompositionRepository;
     }
 
-    public Composition convertViewToComposition(CompositionViewModel view){
-        return new Composition(view.getName());
+    public Composition convertViewToComposition(CompositionViewModel view) {
+        return new Composition(view.getId(), view.getName());
     }
 
-    public CompositionViewModel convertCompositionToView(Composition composition){
+    public CompositionViewModel convertCompositionToView(Composition composition) {
         var view = new CompositionViewModel();
         view.setName(composition.getCompositionName());
+        view.setId(composition.getId());
         return view;
     }
 
-    public Performer convertViewToPerformer(PerformerViewModel view){
-        return new Performer(view.getName());
+    public Performer convertViewToPerformer(PerformerViewModel view) {
+        return new Performer(view.getId(), view.getName());
     }
 
-    public PerformerViewModel convertPerformerToView(Performer performer){
+    public PerformerViewModel convertPerformerToView(Performer performer) {
         var view = new PerformerViewModel();
         view.setName(performer.getPerformerName());
+        view.setId(performer.getId());
         return view;
     }
 
-    public PerformedComposition convertViewToPc(PerformedCompositionsViewModel view){
-        return new PerformedComposition(view.getId(),new Composition(view.getCompositionName()), new Performer(view.getPerformerName()));
+    public PerformedComposition convertViewToPc(PerformedCompositionsViewModel view) {
+        return new PerformedComposition(
+                view.getId(),
+                compositionRepository.findCompositionByCompositionName(view.getPerformerName()),
+                performerRepository.findPerformerByPerformerName(view.getPerformerName()));
     }
 
-    public PerformedCompositionsViewModel convertPcToView(PerformedComposition pc){
+    public PerformedCompositionsViewModel convertPcToView(PerformedComposition pc) {
         var view = new PerformedCompositionsViewModel();
+        view.setId(pc.getId());
         view.setPerformerName(pc.getPerformer().getPerformerName());
         view.setCompositionName(pc.getComposition().getCompositionName());
         return view;

@@ -10,10 +10,11 @@ public class PerformedCompositionsViewModel {
     @NotNull
     private String compositionName;
 
-    /*public PerformedCompositionsViewModel(String performerName, String compositionName) {
+    public PerformedCompositionsViewModel(long id, String performerName, String compositionName) {
+        this.id = id;
         this.performerName = performerName;
         this.compositionName = compositionName;
-    }*/
+    }
 
     public PerformedCompositionsViewModel() {}
 

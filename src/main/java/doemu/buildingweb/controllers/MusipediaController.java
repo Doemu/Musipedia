@@ -71,7 +71,20 @@ public class MusipediaController {
             throw new ValidationException("Adding error");
         }
 
+        //var entity = mapper.convertViewToComposition(compositionViewModel);//new Composition(compositionViewModel.getName());
+        var entity = new Composition(compositionViewModel.getName());
+        compositionRepository.save(entity);
+    }
+
+    @PostMapping
+    @RequestMapping("/saveComposition")
+    public void saveComposition(@RequestBody CompositionViewModel compositionViewModel, BindingResult bindingResult) throws ValidationException {
+        if(bindingResult.hasErrors()){
+            throw new ValidationException("Adding error");
+        }
+
         var entity = mapper.convertViewToComposition(compositionViewModel);//new Composition(compositionViewModel.getName());
+        //var entity = new Composition(compositionViewModel.getName());
         compositionRepository.save(entity);
     }
 
@@ -86,7 +99,29 @@ public class MusipediaController {
         performerRepository.save(entity);
     }
 
-    @GetMapping("/test/{name}")
+    @PostMapping
+    @RequestMapping("/savePerformer")
+    public void savePerformer(@RequestBody PerformerViewModel performerViewModel, BindingResult bindingResult) throws ValidationException {
+        if(bindingResult.hasErrors()){
+            throw new ValidationException("Adding error");
+        }
+
+        var entity = mapper.convertViewToPerformer(performerViewModel);
+        //var entity = mapper.convertViewToPerformer(performerViewModel);
+        performerRepository.save(entity);
+    }
+
+    @DeleteMapping("deleteComposition/{id}")
+    public void deleteComposition(@PathVariable long id){
+        this.compositionRepository.deleteById(id);
+    }
+
+    @DeleteMapping("deletePerformer/{id}")
+    public void deletePerformer(@PathVariable long id){
+        this.performerRepository.deleteById(id);
+    }
+
+    /*@GetMapping("/test/{name}")
     public List<PerformedCompositionsViewModel> test(@PathVariable String name){
         performerRepository.deleteById(name);
         var list = performedCompositionRepository.findAll();
@@ -106,7 +141,7 @@ public class MusipediaController {
         //compositionRepository.save(comp);
         //performerRepository.save(per);
         performedCompositionRepository.save(ent);
-    }
+    }*/
 
     /*@PostMapping
     public void addComposition(@RequestBody CompositionViewModel compositionViewModel, BindingResult bindingResult){

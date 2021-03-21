@@ -1,5 +1,7 @@
 package doemu.buildingweb.entities;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -10,7 +12,14 @@ public class PerformedComposition {
 
     @Id
     @Column(name = "pc_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pc_id_seq")
+    @SequenceGenerator(
+            name = "pc_id_seq",
+            sequenceName = "pc_id_seq",
+            initialValue = 5,
+            allocationSize = 1
+    )
     private long id;
 
     /*@Column(name = "composition_name")
@@ -20,10 +29,10 @@ public class PerformedComposition {
     private String performerName;*/
 
     @ManyToOne
-    @JoinColumn(name = "composition_name")
+    @JoinColumn(name = "composition_id")
     private Composition composition;
     @ManyToOne
-    @JoinColumn(name = "performer_name")
+    @JoinColumn(name = "performer_id")
     private Performer performer;
 
     public PerformedComposition(long id, Composition composition, Performer performer) {
