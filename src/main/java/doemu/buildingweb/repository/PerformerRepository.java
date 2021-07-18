@@ -8,4 +8,5 @@ import javax.transaction.Transactional;
 public interface PerformerRepository extends JpaRepository<Performer, Long> {
     @Transactional
     public Performer findPerformerByPerformerName(String name);
+    public boolean existsByPerformerName(String name);
 }

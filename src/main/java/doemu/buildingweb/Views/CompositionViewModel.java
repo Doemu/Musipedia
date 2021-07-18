@@ -13,6 +13,10 @@ public class CompositionViewModel {
         this.name = name;
     }
 
+    public CompositionViewModel(String name) {
+        this.name = name;
+    }
+
     public CompositionViewModel() {
     }
 

@@ -13,6 +13,10 @@ public class PerformerViewModel {
         this.name = name;
     }
 
+    public PerformerViewModel(String name) {
+        this.name = name;
+    }
+
     public PerformerViewModel() {
     }
 

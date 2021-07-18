@@ -22,12 +22,6 @@ public class PerformedComposition {
     )
     private long id;
 
-    /*@Column(name = "composition_name")
-    private String compositionName;
-
-    @Column(name = "performer_name")
-    private String performerName;*/
-
     @ManyToOne
     @JoinColumn(name = "composition_id")
     private Composition composition;
@@ -44,6 +38,9 @@ public class PerformedComposition {
     public PerformedComposition(Composition composition, Performer performer) {
         this.composition = composition;
         this.performer = performer;
+
+        /*this.composition.getPerformedCompositions().add(this);
+        this.performer.getPerformedCompositions().add(this);*/
     }
 
     public PerformedComposition() {

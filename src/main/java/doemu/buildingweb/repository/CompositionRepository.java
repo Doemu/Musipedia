@@ -11,4 +11,5 @@ import java.util.List;
 public interface CompositionRepository extends JpaRepository <Composition, Long>{
     @Transactional
     public Composition findCompositionByCompositionName(String name);
+    public boolean existsByCompositionName(String name);
 }

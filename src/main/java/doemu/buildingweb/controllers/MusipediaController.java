@@ -11,6 +11,7 @@ import doemu.buildingweb.repository.CompositionRepository;
 import doemu.buildingweb.repository.PerformedCompositionRepository;
 import doemu.buildingweb.repository.PerformerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,7 +50,7 @@ public class MusipediaController {
 
     @GetMapping("/list")
     public List<PerformedCompositionsViewModel> list(){
-        var list = performedCompositionRepository.findAll();
+        var list = performedCompositionRepository.findByOrderByCompositionAsc();
         return list.stream().map(obj -> this.mapper.convertPcToView(obj)).collect(Collectors.toList());
     }
     @GetMapping("/compositions")
@@ -121,6 +122,51 @@ public class MusipediaController {
         this.performerRepository.deleteById(id);
     }
 
+    @PostMapping
+    @RequestMapping("/createPerformedComposition")
+    public void createPerformedComposition(@RequestBody PerformedCompositionsViewModel performedCompositionsViewModel, BindingResult bindingResult) throws ValidationException {
+        if(bindingResult.hasErrors()){
+            throw new ValidationException("Adding error");
+        }
+
+        PerformedComposition entity;
+        /*CompositionViewModel compositionViewModel = new CompositionViewModel(performedCompositionsViewModel.getCompositionName());  //Страшный некрокод, потому что я дурак, ещё и ленивый
+        PerformerViewModel performerViewModel = new PerformerViewModel(performedCompositionsViewModel.getPerformerName());*/
+
+        if(compositionRepository.existsByCompositionName(performedCompositionsViewModel.getCompositionName())&&performerRepository.existsByPerformerName(performedCompositionsViewModel.getPerformerName())) {
+            entity = new PerformedComposition(
+                    compositionRepository.findCompositionByCompositionName(performedCompositionsViewModel.getCompositionName()),
+                    performerRepository.findPerformerByPerformerName(performedCompositionsViewModel.getPerformerName())
+            );
+        }
+        else if(!compositionRepository.existsByCompositionName(performedCompositionsViewModel.getCompositionName())&&!performerRepository.existsByPerformerName(performedCompositionsViewModel.getPerformerName())){
+            Composition composition = new Composition(performedCompositionsViewModel.getCompositionName());
+            Performer performer = new Performer(performedCompositionsViewModel.getPerformerName());
+            entity = new PerformedComposition(
+                    composition,
+                    performer
+            );
+            compositionRepository.save(composition);
+            performerRepository.save(performer);
+        }
+        else if(compositionRepository.existsByCompositionName(performedCompositionsViewModel.getCompositionName())){
+            Performer performer = new Performer(performedCompositionsViewModel.getPerformerName());
+            entity = new PerformedComposition(
+                    compositionRepository.findCompositionByCompositionName(performedCompositionsViewModel.getCompositionName()),
+                    performer
+            );
+            performerRepository.save(performer);
+        }
+        else {
+            Composition composition = new Composition(performedCompositionsViewModel.getCompositionName());
+            entity = new PerformedComposition(
+                    composition,
+                    performerRepository.findPerformerByPerformerName(performedCompositionsViewModel.getPerformerName())
+            );
+            compositionRepository.save(composition);
+        }
+        performedCompositionRepository.save(entity);
+    }
     /*@GetMapping("/test/{name}")
     public List<PerformedCompositionsViewModel> test(@PathVariable String name){
         performerRepository.deleteById(name);
