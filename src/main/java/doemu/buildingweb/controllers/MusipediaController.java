@@ -122,6 +122,11 @@ public class MusipediaController {
         this.performerRepository.deleteById(id);
     }
 
+    @DeleteMapping("deletePerformedComposition/{id}")
+    public void deletePerformedComposition(@PathVariable long id){
+        this.performedCompositionRepository.deleteById(id);
+    }
+
     @PostMapping
     @RequestMapping("/createPerformedComposition")
     public void createPerformedComposition(@RequestBody PerformedCompositionsViewModel performedCompositionsViewModel, BindingResult bindingResult) throws ValidationException {
